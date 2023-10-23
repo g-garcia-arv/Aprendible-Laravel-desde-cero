@@ -16,17 +16,16 @@ class ChirpController extends Controller
         return view('chirps.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
     
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         
         //
+
+        $request->validate([
+            'message' => ['required', 'min:3', 'max:255'],
+        ]);
+         
         Chirp::create([
             'message' => $request->get('message'),
             'user_id' => auth()->id(),
