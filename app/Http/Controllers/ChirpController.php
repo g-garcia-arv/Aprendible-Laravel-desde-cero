@@ -22,14 +22,13 @@ class ChirpController extends Controller
         
         //
 
-        $request->validate([
+        $validated = $request->validate([
             'message' => ['required', 'min:3', 'max:255'],
         ]);
+
+        auth()->user()->chirps()->create($validated);
          
-        Chirp::create([
-            'message' => $request->get('message'),
-            'user_id' => auth()->id(),
-        ]);
+       
 
         return to_route('chirps.index')->with('status', __('Chirp created successfully!'));
 
