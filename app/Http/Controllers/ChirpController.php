@@ -51,14 +51,13 @@ class ChirpController extends Controller
     {
         //
 
-        if (auth()->user()->id !== $chirp->user_id) {
-            abort(403);
-        }
+        $this->authorize('update', $chirp);
+        
 
-        return view('chirps.edit', [
-            'chirp' => $chirp
-        ]);
-
+            return view('chirps.edit', [
+                'chirp' => $chirp
+            ]);
+        
     }
 
     /**
@@ -68,9 +67,7 @@ class ChirpController extends Controller
     {
         //
 
-        if (auth()->user()->id !== $chirp->user_id) {
-            abort(403);
-        }
+        $this->authorize('update', $chirp);
 
         $validated = $request->validate([
             'message' => ['required', 'min:3', 'max:255'],

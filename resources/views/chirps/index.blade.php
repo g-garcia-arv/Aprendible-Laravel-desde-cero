@@ -46,8 +46,7 @@
                             </div>
                             <p class="mt-4 text-lg text-gray-900 dark:text-gray-100">{{ $chirp->message }}</p>
                         </div>
-                        @if (auth()->user()->id === $chirp->user_id)
-                            
+                        @can('update', $chirp)
                         <x-dropdown>
 
                             <x-slot name="trigger">
@@ -66,7 +65,10 @@
                             </x-slot>
 
                         </x-dropdown>
-                        @endif
+                            
+                        @endcan
+                            
+                        
                     </div>
                 @endforeach
             </div>
