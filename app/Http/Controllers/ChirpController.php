@@ -18,10 +18,10 @@ class ChirpController extends Controller
         ]);
     }
 
-    
+
     public function store(Request $request)
     {
-        
+
         //
 
         $validated = $request->validate([
@@ -29,8 +29,8 @@ class ChirpController extends Controller
         ]);
 
         auth()->user()->chirps()->create($validated);
-         
-       
+
+
 
         return to_route('chirps.index')->with('status', __('Chirp created successfully!'));
 
@@ -50,9 +50,15 @@ class ChirpController extends Controller
     public function edit(Chirp $chirp)
     {
         //
+
+        if (auth()->user()->id !== $chirp->user_id) {
+            abort(403);
+        }
+
         return view('chirps.edit', [
-            'chirp'=> $chirp
+            'chirp' => $chirp
         ]);
+
     }
 
     /**
@@ -61,13 +67,18 @@ class ChirpController extends Controller
     public function update(Request $request, Chirp $chirp)
     {
         //
-         $validated = $request->validate([
-            'message' => ['required', 'min:3','max:255'],
-         ]);
 
-         $chirp->update($validated);
+        if (auth()->user()->id !== $chirp->user_id) {
+            abort(403);
+        }
 
-         return to_route('chirps.index')->with('status',__('Chirp updated successfully!'));
+        $validated = $request->validate([
+            'message' => ['required', 'min:3', 'max:255'],
+        ]);
+
+        $chirp->update($validated);
+
+        return to_route('chirps.index')->with('status', __('Chirp updated successfully!'));
     }
 
     /**
