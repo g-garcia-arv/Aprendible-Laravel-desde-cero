@@ -34,12 +34,31 @@
                         <div class="flex-1">
                             <div class="flex justyfy-between items-center">
                                 <div>
-                                    <span class="text-gray-800 dark:text-gray-200">{{ $chirp->user->name}}</span>
-                                    <small class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ $chirp->created_at->format('j M Y, g:i a') }}</small>
+                                    <span class="text-gray-800 dark:text-gray-200">{{ $chirp->user->name }}</span>
+                                    <small
+                                        class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ $chirp->created_at->format('j M Y, g:i a') }}</small>
                                 </div>
                             </div>
                             <p class="mt-4 text-lg text-gray-900 dark:text-gray-100">{{ $chirp->message }}</p>
                         </div>
+                        <x-dropdown>
+
+                            <x-slot name="trigger">
+                                <button><svg class="w-5 h-5 text-gray-500 dark:text-gray-300"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                                    </svg></button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('chirps.edit', $chirp)">
+                                    {{ __('Edit Chirp') }}
+                                </x-dropdown-link>
+                            </x-slot>
+
+                        </x-dropdown>
                     </div>
                 @endforeach
             </div>
