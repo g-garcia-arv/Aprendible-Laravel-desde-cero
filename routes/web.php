@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return "welcome to our home page";
+    return view('welcome');
 });
 
 
